@@ -4,6 +4,12 @@
 
 # Screenshots
 
+# To-Do
+
+- To remove youtube branding:
+  - Create default background to stay in place when video thumbnail would appear (React Player has something for this)
+  - Create loading background to stay in place when video loads (even if stays a little more than necessary)
+
 # Reference Links
 
 - https://www.assemblyai.com/blog/react-text-to-speech-simplified/

@@ -1,8 +1,14 @@
 import ReactPlayer from 'react-player';
-import { MdPlayArrow, MdRestartAlt, MdOutlineVolumeUp, MdPause } from 'react-icons/md';
+import {
+  MdPlayArrow,
+  MdRestartAlt,
+  MdOutlineVolumeUp,
+  MdPause,
+  MdVolumeMute
+} from 'react-icons/md';
 import { useReactPlayer } from '../../global/hooks/useReactPlayer';
 import SideBar from './components/SideBar';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/lang
 // Reference: https://www.npmjs.com/package/react-player
@@ -12,15 +18,20 @@ const msg = new SpeechSynthesisUtterance();
 msg.text = 'rihanna escreve Deus com d minúsculo e vira papagaio no interior de minas gerais';
 
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [teste, setTeste] = useState(0);
   const { settings, dispatchSettings } = useReactPlayer();
-  const voices = synth.getVoices();
-  console.log(voices);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [refreshVideo, setRefreshVideo] = useState(0);
+
+  const voices = synth.getVoices();
+
+  const refMuteButton = useRef<HTMLButtonElement>(null);
+  const refSideBar = useRef<HTMLButtonElement>(null);
+
+  //Used to skip embedded tabeable elements. Mute goes to Sidebar and vice/versa
   useEffect(() => {
-    console.log(teste);
-  }, [teste]);
+    refMuteButton.current?.focus();
+  }, [isOpen]);
 
   msg.lang = 'en-GB';
   msg.voice = voices[0];
@@ -30,7 +41,7 @@ const Home = () => {
       <main className=" relative flex h-full w-full items-end justify-center gap-2 overflow-hidden p-12">
         {/* Restart */}
         <button
-          onClick={() => setTeste((prev) => prev + 1)}
+          onClick={() => setRefreshVideo((prev) => prev + 1)}
           className=" z-10 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full  border-2 border-slate-50 border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100">
           <MdRestartAlt size="1.5rem" />
         </button>
@@ -43,20 +54,43 @@ const Home = () => {
           {settings.playing ? <MdPause size="2rem" /> : <MdPlayArrow size="2rem" />}
         </button>
         {/* Volume */}
-        <button className=" z-10 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full  border-2 border-slate-50 border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100">
-          <MdOutlineVolumeUp size="1.5rem" />
+        <button
+          ref={refMuteButton}
+          onClick={() =>
+            dispatchSettings({ type: 'changeMuted', payload: { value: !settings.muted } })
+          }
+          onKeyDown={(e) => {
+            if (e.key === 'Tab' && !e.shiftKey) {
+              e.preventDefault();
+              refSideBar.current?.focus();
+            }
+          }}
+          className=" z-10 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full  border-2 border-slate-50 border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100">
+          {settings.muted ? <MdVolumeMute size="1.5rem" /> : <MdOutlineVolumeUp size="1.5rem" />}
         </button>
         {/* Remove YT Branding: https://codepen.io/Terrafire123/pen/yLayQvM with Tweaks in width and height */}
         <ReactPlayer
-          className="pointer-events-none absolute top-2/4 left-0 -translate-y-2/4 "
+          className="[& *]:-z-10 pointer-events-none absolute top-2/4 left-0 -translate-y-2/4 "
           width="100%"
           height="100vw"
-          key={teste}
+          key={refreshVideo}
           {...settings}
-          url="https://www.youtube.com/watch?v=GTaXbH6iSFA&?t=1"
+          url="https://www.youtube.com/watch?v=y8qhSduN6sk&t=13s"
         />
       </main>
-      <SideBar isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
+      <SideBar
+        onKeyDown={(e) => {
+          if (e.shiftKey && e.key === 'Tab') {
+            e.preventDefault();
+            refMuteButton.current?.focus();
+          }
+        }}
+        ref={refSideBar}
+        isOpen={isOpen}
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+        }}
+      />
     </div>
   );
 };
