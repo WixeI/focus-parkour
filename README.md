@@ -4,6 +4,16 @@
 
 # Screenshots
 
+# Reference Links
+
+- https://www.assemblyai.com/blog/react-text-to-speech-simplified/
+- https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/voice
+- https://www.npmjs.com/package/react-player#config-prop
+- https://developers.google.com/youtube/player_parameters?playerVersion=HTML5
+- https://react-hook-form.com/get-started/
+- https://www.radix-ui.com/docs/primitives/components/slider#slider
+- https://www.framer.com/docs/introduction/
+
 # This project used:
 
 ## In General
@@ -96,3 +106,34 @@
 - translations: holds translation-related files
 
 Ps: Group in folders based on functionality first, and then on categories inside these functionalities
+
+# Component Structure
+
+## Components can be of:
+
+- Functionality: globals (No notation)
+- Piece/Part/Portion: locals ("P" notation)
+- Style: locals ("S" notation)
+
+PS: Page components are special no notation Part Components
+
+## Applying notation:
+
+### In styles.ts:
+
+- const S = {styles}
+
+### In index.ts:
+
+- const P = {parts}
+
+PS: Parts are in index because they come from different files. If styles were the same way, they would be an object in index too.
+
+## Rules:
+
+- Inline styling only to apply conditionals
+- Use common sense to break into Parts. Don't over-engineer it
+
+## FAQ
+
+- Why not inline styling? Because DRY is not good in it, and creating components defeats the purpose of inline style being faster to read and write

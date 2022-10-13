@@ -4,6 +4,11 @@ import { globalCss } from '../../../configs/stitches/stitches.config';
 //$ prefix in a string
 export const defaultStyles = globalCss({
   body: {
+    fontFamily: 'Oxygen, sans-seriff',
+    boxSizing: 'border-box'
+  },
+  '*': {
+    fontFamily: 'Oxygen, sans-seriff',
     boxSizing: 'border-box'
   }
 });

@@ -1,6 +1,4 @@
 import { styled } from '../../../configs/stitches/stitches.config';
-import { summerTheme } from '../../styles/themes/summer';
-import { Box } from '../Box';
 
 export const Button = styled('button', {
   // mini reset
