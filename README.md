@@ -6,6 +6,11 @@
 
 # To-Do
 
+- Search on how to create custom hooks to handle Tab Navigation. Ideas:
+  - An array of references in which each element leads to another with tab/shift tab
+  - These references are to be put in order of navigation
+  - If one goes missing, the keydown events are adjusted automatically
+  - !! See how to handle re-rendering and changes in the map
 - To remove youtube branding:
   - Create default background to stay in place when video thumbnail would appear (React Player has something for this)
   - Create loading background to stay in place when video loads (even if stays a little more than necessary)

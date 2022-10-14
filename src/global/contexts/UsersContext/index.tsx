@@ -1,6 +1,5 @@
 import produce from 'immer';
 import { createContext, useContext, useEffect, useReducer, useMemo } from 'react';
-import { experienceBasePoints } from '../../utilities/handleExperience';
 import { Users } from './types/users';
 import { Action, ContextProps, ProviderProps } from './types/provider';
 
@@ -31,8 +30,7 @@ function usersReducer(state: Users, action: Action) {
       return produce(state, (draft) => {
         const item = draft.list.find((item) => item.id === action.payload.id);
         if (!item) return;
-        const baseValue = experienceBasePoints(item.experience);
-        item.experience += action.payload.experienceBlocks * baseValue;
+        item.experience += action.payload.experienceBlocks * 5;
       });
     case 'changeActive':
       return produce(state, (draft) => {
