@@ -10,7 +10,7 @@ const defaultState: Settings = {
   playing: false,
   loop: false,
   light: false,
-  volume: 1,
+  volume: 0.2,
   muted: false,
   playbackRate: 1,
   pip: false,

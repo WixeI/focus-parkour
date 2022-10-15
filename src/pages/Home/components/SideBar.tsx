@@ -1,18 +1,17 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { MdChevronRight, MdChevronLeft } from 'react-icons/md';
 import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion';
-import { forwardRef, useRef, useEffect } from 'react';
+import { forwardRef, useRef, useEffect, Dispatch } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useTTS } from '../../../global/hooks/useTTS';
+import { Action, Voice } from '../../../global/hooks/useTTS/types';
 
 //Reference: https://stackoverflow.com/questions/67506992/how-can-i-switch-between-react-components-using-framer-motion
 //Reference: https://codesandbox.io/s/framer-motion-carousel-animation-wetrf?file=/src/App.tsx:1098-1106
 
 interface SideBarProps extends HTMLMotionProps<'aside'> {
   isOpen: boolean;
-  voiceData: {
-    createMessage: any;
-    startSpeech: any;
-  };
+  voice: Voice;
+  dispatchVoice: Dispatch<Action>;
 }
 
 interface FormValues {
@@ -20,7 +19,7 @@ interface FormValues {
 }
 
 const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
-  ({ isOpen, onClick, voiceData, ...rest }, ref) => {
+  ({ isOpen, onClick, voice, dispatchVoice, ...rest }, ref) => {
     //Focus Management
     const R = {
       MdChevronLeft: useRef<HTMLButtonElement>(null),
@@ -35,7 +34,8 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
     //Forms & Voice Management
     const { register, handleSubmit } = useForm<FormValues>();
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-      voiceData.createMessage(data.text);
+      voice.synth.cancel();
+      dispatchVoice({ type: 'generateMessages', payload: { message: data.text } });
     };
 
     //Conditional Management
@@ -71,10 +71,10 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
               className="flex h-full w-full flex-col gap-2 px-4 ">
               <section className=" flex flex-col gap-2">
                 <label>Your text</label>
-                <textarea {...register('text')} className="resize-none text-slate-900" />
+                <textarea {...register('text')} className=" h-80 resize-none px-1 text-slate-900" />
               </section>
 
-              <section className=" flex flex-col gap-2">
+              {/* <section className=" flex flex-col gap-2">
                 <label>Voice Option</label>
                 <select />
               </section>
@@ -82,7 +82,7 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
               <section className=" flex flex-col gap-2">
                 <label>Music Style</label>
                 <select />
-              </section>
+              </section> */}
 
               <button className=" mt-4 border-none bg-slate-600 py-2 text-slate-50 shadow-md shadow-slate-800 transition-all duration-300 hover:bg-slate-500">
                 Generate
