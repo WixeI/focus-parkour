@@ -19,7 +19,7 @@ interface FormValues {
 }
 
 const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
-  ({ isOpen, onClick, voice, dispatchVoice, ...rest }, ref) => {
+  ({ isOpen, onClick, onKeyDown, voice, dispatchVoice, ...rest }, ref) => {
     //Focus Management
     const R = {
       MdChevronLeft: useRef<HTMLButtonElement>(null),
@@ -51,6 +51,7 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
           <div className=" z-10 flex h-full w-full flex-col gap-2 overflow-clip">
             {/* Title */}
             <button
+              onKeyDown={onKeyDown}
               key="MdChevronRight"
               ref={R.MdChevronRight}
               className="flex items-center hover:cursor-pointer"
@@ -69,14 +70,14 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
               transition={{ ease: 'easeInOut' }}
               className="flex h-full w-full flex-col gap-2 px-4 ">
               {/* Text */}
-              <section className=" flex flex-col gap-2">
-                <label>Your text</label>
+              <label className=" flex flex-col gap-2">
+                <span>Your text</span>
                 <textarea {...register('text')} className=" h-80 resize-none px-1 text-slate-900" />
-              </section>
+              </label>
 
               {/* Voice Option */}
-              <section className=" flex flex-col gap-2">
-                <label>Voice Option</label>
+              <label className=" flex flex-col gap-2">
+                <span>Voice Option</span>
                 <select
                   className=" text-slate-900"
                   defaultValue={
@@ -90,11 +91,11 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
                     <option value={item.name}>{item.name}</option>
                   ))}
                 </select>
-              </section>
+              </label>
 
               {/* Speed */}
-              <section className=" flex flex-col gap-2">
-                <label>Voice Speed</label>
+              <label className=" flex flex-col gap-2">
+                <span>Voice Speed</span>
                 <select
                   className=" text-slate-900"
                   defaultValue={1}
@@ -112,7 +113,7 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
                   <option value={1.75}>1.75</option>
                   <option value={2}>2</option>
                 </select>
-              </section>
+              </label>
 
               {/* <section className=" flex flex-col gap-2">
                 <label>Music Style</label>
