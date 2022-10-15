@@ -84,10 +84,6 @@ export function useTTS() {
     }
   }, [voice.messages]);
 
-  useEffect(() => {
-    console.log(voice);
-  }, [voice]);
-
   const control = {
     start: () => {
       if (voice.messages.length > 0) {

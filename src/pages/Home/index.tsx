@@ -128,7 +128,7 @@ const Home = () => {
             {/* Background */}
             <img
               src={lowPolyGridHorizontal}
-              className="absolute top-0 left-0 -z-10 h-full max-w-none opacity-90"
+              className="absolute top-0 left-0 -z-10 min-h-full min-w-full max-w-none opacity-90"
             />
           </motion.div>
         )}

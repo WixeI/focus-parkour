@@ -73,11 +73,16 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
                 <label>Your text</label>
                 <textarea {...register('text')} className=" h-80 resize-none px-1 text-slate-900" />
               </section>
+
               {/* Voice Option */}
               <section className=" flex flex-col gap-2">
                 <label>Voice Option</label>
                 <select
                   className=" text-slate-900"
+                  defaultValue={
+                    voice.synth.getVoices().find((item) => item.default)?.name ||
+                    voice.details.voice?.name
+                  }
                   onChange={(e) =>
                     dispatchVoice({ type: 'changeVoice', payload: { voiceName: e.target.value } })
                   }>
@@ -116,16 +121,6 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
 
               <button className=" mt-4 border-none bg-slate-600 py-2 text-slate-50 shadow-md shadow-slate-800 transition-all duration-300 hover:bg-slate-500">
                 Generate
-              </button>
-              <button
-                onClick={() => {
-                  console.log('Antes e depois');
-                  console.log(voice.synth);
-                  voice.synth.cancel();
-                  voice.synth.cancel();
-                  console.log(voice.synth);
-                }}>
-                Cancelar
               </button>
             </motion.form>
           </div>
