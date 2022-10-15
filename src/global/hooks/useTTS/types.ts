@@ -6,9 +6,6 @@ export interface Voice {
   messages: SpeechSynthesisUtterance[];
 }
 
-//quando vai pro zero, reseta tudo e precisa do play
-//qualquer elemento pode ir pro zero, e o último sempre vai
-
 export type Action =
   | {
       type: 'generateMessages';

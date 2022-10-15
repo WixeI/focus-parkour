@@ -12,6 +12,7 @@ import SideBar from './components/SideBar';
 import { useState, useRef, useEffect } from 'react';
 import { changeFocusTo } from '../../global/utilities/changeFocusTo';
 import { useTTS } from '../../global/hooks/useTTS';
+import { motion } from 'framer-motion';
 
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/lang
 // Reference: https://www.npmjs.com/package/react-player
@@ -67,40 +68,50 @@ const Home = () => {
   return (
     <div className="flex h-screen w-screen overflow-clip bg-slate-700">
       {/* Controls */}
-      <main className=" relative flex h-full w-full items-end justify-center gap-2 overflow-hidden p-12">
+      <main className="relative flex h-full w-full items-end justify-center gap-2 overflow-hidden p-12">
         {/* Restart */}
         <button
+          disabled={voice.messages.length === 0}
           onClick={() => {
             setRefreshVideo((prev) => prev + 1);
             dispatchVoice({ type: 'restart' });
           }}
-          className=" z-30 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full  border-2 border-slate-50 border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100">
+          className=" z-30 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full border-2 border-slate-50  border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 disabled:opacity-90 disabled:hover:border-opacity-50">
           <MdRestartAlt size="1.5rem" />
         </button>
         {/* Play */}
         <button
+          disabled={voice.messages.length === 0}
           onClick={startContent}
-          className=" z-30 flex h-16 w-16 items-center justify-center rounded-full  border-2 border-slate-50 border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100">
+          className=" z-30 flex h-16 w-16 items-center justify-center rounded-full border-2 border-slate-50 border-opacity-50  bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 disabled:opacity-90 disabled:hover:border-opacity-50">
           {settings.playing ? <MdPause size="2rem" /> : <MdPlayArrow size="2rem" />}
         </button>
         {/* Volume */}
         <button
+          disabled={voice.messages.length === 0}
           ref={refMuteButton}
           onClick={() =>
             dispatchSettings({ type: 'changeMuted', payload: { value: !settings.muted } })
           }
           onKeyDown={(e) => changeFocusTo(e, refSideBar)}
-          className=" z-30 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full  border-2 border-slate-50 border-opacity-50 bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100">
+          className=" z-30 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full border-2 border-slate-50 border-opacity-50  bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 disabled:opacity-90 disabled:hover:border-opacity-50">
           {settings.muted ? <MdVolumeMute size="1.5rem" /> : <MdOutlineVolumeUp size="1.5rem" />}
         </button>
         {/* Subtitles */}
         {isLoading && (
-          <div className="absolute top-0 left-0 z-20 h-full w-full bg-slate-600">
-            <CgSpinnerTwoAlt
-              size="4rem"
-              className="absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 text-slate-50"
-            />
-          </div>
+          <motion.div
+            initial={{ y: '30px', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ bounceStiffness: 80 }}
+            className="absolute top-0 left-0 z-20 h-full w-full bg-slate-600">
+            <motion.div
+              initial={{ rotate: 0, x: '-50%' }}
+              animate={{ rotate: 360, x: '-50%' }}
+              transition={{ repeat: Infinity, duration: 0.8 }}
+              className="absolute top-1/2 left-1/2 h-min w-min">
+              <CgSpinnerTwoAlt size="4rem" className=" text-slate-50" />
+            </motion.div>
+          </motion.div>
         )}
         {voice.messages[voice.active] && (
           <h1
