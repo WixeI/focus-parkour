@@ -13,6 +13,8 @@ import { useState, useRef, useEffect } from 'react';
 import { changeFocusTo } from '../../global/utilities/changeFocusTo';
 import { useTTS } from '../../global/hooks/useTTS';
 import { motion } from 'framer-motion';
+import logo from '../../global/resources/logo.png';
+import lowPolyGridHorizontal from '../../global/resources/low-poly-grid-horizontal.svg';
 
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/lang
 // Reference: https://www.npmjs.com/package/react-player
@@ -44,9 +46,9 @@ const Home = () => {
       dispatchSettings({ type: 'changePlaying', payload: { value: true } });
     } else {
       //Voice Management
-      if (!voice.synth.speaking && !voice.synth.paused) control.start();
-      else if (!voice.synth.paused) control.pause();
-      else if (voice.synth.paused) control.resume();
+      if (voice.state === 'not-running') control.start();
+      else if (voice.state === 'running') control.pause();
+      else control.resume();
     }
   }
 
@@ -54,8 +56,8 @@ const Home = () => {
     hasBuffered && startContent();
   }, [hasBuffered]);
 
-  //Makes Video controlled by TTS
   useEffect(() => {
+    //Makes Video controlled by TTS
     if (voice.state === 'running')
       dispatchSettings({ type: 'changePlaying', payload: { value: true } });
     else dispatchSettings({ type: 'changePlaying', payload: { value: false } });
@@ -90,27 +92,44 @@ const Home = () => {
         <button
           disabled={voice.messages.length === 0}
           ref={refMuteButton}
-          onClick={() =>
-            dispatchSettings({ type: 'changeMuted', payload: { value: !settings.muted } })
-          }
+          onClick={() => {
+            dispatchSettings({ type: 'changeMuted', payload: { value: !settings.muted } });
+          }}
           onKeyDown={(e) => changeFocusTo(e, refSideBar)}
           className=" z-30 flex h-12 w-12 translate-y-6 items-center justify-center rounded-full border-2 border-slate-50 border-opacity-50  bg-slate-900 bg-opacity-95 text-slate-50 shadow-md shadow-slate-900 hover:border-opacity-100 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300 disabled:opacity-90 disabled:hover:border-opacity-50">
           {settings.muted ? <MdVolumeMute size="1.5rem" /> : <MdOutlineVolumeUp size="1.5rem" />}
         </button>
         {/* Subtitles */}
-        {isLoading && (
+        {(isLoading || !hasBuffered || voice.state === 'not-running') && (
           <motion.div
             initial={{ y: '30px', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ bounceStiffness: 80 }}
             className="absolute top-0 left-0 z-20 h-full w-full bg-slate-600">
-            <motion.div
-              initial={{ rotate: 0, x: '-50%' }}
-              animate={{ rotate: 360, x: '-50%' }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="absolute top-1/2 left-1/2 h-min w-min">
-              <CgSpinnerTwoAlt size="4rem" className=" text-slate-50" />
-            </motion.div>
+            {isLoading ? (
+              <motion.div
+                initial={{ rotate: 0, x: '-50%' }}
+                animate={{ rotate: 360, x: '-50%' }}
+                transition={{ repeat: Infinity, duration: 0.8 }}
+                className="absolute top-1/2 left-1/2 h-min w-min">
+                <CgSpinnerTwoAlt size="4rem" className=" text-slate-50" />
+              </motion.div>
+            ) : (
+              <>
+                <motion.img
+                  initial={{ y: '-35%', x: '-50%' }}
+                  animate={{ y: '-50%', x: '-50%' }}
+                  transition={{ repeat: Infinity, duration: 3, repeatType: 'reverse' }}
+                  src={logo}
+                  className=" absolute top-[35%] left-1/2 w-1/3 min-w-[350px] drop-shadow-lg"
+                />
+              </>
+            )}
+            {/* Background */}
+            <img
+              src={lowPolyGridHorizontal}
+              className="absolute top-0 left-0 -z-10 h-full max-w-none opacity-90"
+            />
           </motion.div>
         )}
         {voice.messages[voice.active] && (

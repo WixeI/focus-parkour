@@ -34,7 +34,6 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
     //Forms & Voice Management
     const { register, handleSubmit } = useForm<FormValues>();
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-      voice.synth.cancel();
       dispatchVoice({ type: 'generateMessages', payload: { message: data.text } });
     };
 
@@ -69,23 +68,64 @@ const SideBar = forwardRef<HTMLButtonElement, SideBarProps>(
               exit={{ x: '100%', opacity: 0, transition: { duration: 0.1 } }}
               transition={{ ease: 'easeInOut' }}
               className="flex h-full w-full flex-col gap-2 px-4 ">
+              {/* Text */}
               <section className=" flex flex-col gap-2">
                 <label>Your text</label>
                 <textarea {...register('text')} className=" h-80 resize-none px-1 text-slate-900" />
               </section>
-
-              {/* <section className=" flex flex-col gap-2">
+              {/* Voice Option */}
+              <section className=" flex flex-col gap-2">
                 <label>Voice Option</label>
-                <select />
+                <select
+                  className=" text-slate-900"
+                  onChange={(e) =>
+                    dispatchVoice({ type: 'changeVoice', payload: { voiceName: e.target.value } })
+                  }>
+                  {voice.synth.getVoices().map((item) => (
+                    <option value={item.name}>{item.name}</option>
+                  ))}
+                </select>
               </section>
 
+              {/* Speed */}
               <section className=" flex flex-col gap-2">
+                <label>Voice Speed</label>
+                <select
+                  className=" text-slate-900"
+                  defaultValue={1}
+                  onChange={(e) =>
+                    dispatchVoice({
+                      type: 'changeSpeed',
+                      payload: { voiceSpeed: parseFloat(e.target.value) }
+                    })
+                  }>
+                  <option value={0.5}>0.5</option>
+                  <option value={0.75}>0.75</option>
+                  <option value={1}>1</option>
+                  <option value={1.25}>1.25</option>
+                  <option value={1.5}>1.5</option>
+                  <option value={1.75}>1.75</option>
+                  <option value={2}>2</option>
+                </select>
+              </section>
+
+              {/* <section className=" flex flex-col gap-2">
                 <label>Music Style</label>
                 <select />
               </section> */}
 
               <button className=" mt-4 border-none bg-slate-600 py-2 text-slate-50 shadow-md shadow-slate-800 transition-all duration-300 hover:bg-slate-500">
                 Generate
+              </button>
+              <button
+                onClick={() => {
+                  console.log('Antes e depois');
+                  console.log(voice.synth);
+                  voice.synth.cancel();
+                  voice.synth.cancel();
+                  console.log(voice.synth);
+                }}>
+                Cancelar
               </button>
             </motion.form>
           </div>

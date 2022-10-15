@@ -1,5 +1,9 @@
 export interface Voice {
   synth: SpeechSynthesis;
+  details: {
+    voice?: SpeechSynthesisVoice | null;
+    speed?: number | null;
+  };
   state: 'paused' | 'running' | 'not-running';
   isCanceled: boolean;
   active: number;
@@ -20,4 +24,12 @@ export type Action =
   | {
       type: 'setState';
       payload: { as: 'paused' | 'running' | 'not-running' };
+    }
+  | {
+      type: 'changeVoice';
+      payload: { voiceName: string };
+    }
+  | {
+      type: 'changeSpeed';
+      payload: { voiceSpeed: number };
     };
