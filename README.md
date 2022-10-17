@@ -22,9 +22,6 @@ http://WixeI.github.io/focus-parkour
 - Props order: "rest & ref", "arias", "props"
 - ConditionalStatements & Returns section
 - Maps
-- Styled Component
-- "S" namespace for Styled Components
-- Styles with propStyles variable
 
 ### On Styles and Theming
 
