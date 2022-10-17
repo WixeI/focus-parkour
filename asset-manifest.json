@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/focus-parkour/static/css/main.e387b14f.css",
+    "main.js": "/focus-parkour/static/js/main.a9cb38f1.js",
+    "static/js/787.e30c4f47.chunk.js": "/focus-parkour/static/js/787.e30c4f47.chunk.js",
+    "static/media/logo.png": "/focus-parkour/static/media/logo.5b5146e4f7ed311d1169.png",
+    "static/media/low-poly-grid-horizontal.svg": "/focus-parkour/static/media/low-poly-grid-horizontal.e1786d5e592b3ceaa84f7c35a75f20cf.svg",
+    "index.html": "/focus-parkour/index.html",
+    "main.e387b14f.css.map": "/focus-parkour/static/css/main.e387b14f.css.map",
+    "main.a9cb38f1.js.map": "/focus-parkour/static/js/main.a9cb38f1.js.map",
+    "787.e30c4f47.chunk.js.map": "/focus-parkour/static/js/787.e30c4f47.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e387b14f.css",
+    "static/js/main.a9cb38f1.js"
+  ]
+}
