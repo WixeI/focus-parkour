@@ -1,4 +1,5 @@
 {
+  "homepage": "http://WixeI.github.io/focus-parkour",
   "name": "focus-parkour",
   "version": "0.1.0",
   "private": true,
@@ -20,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -62,6 +65,7 @@
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-testing-library": "^5.7.2",
+    "gh-pages": "^4.0.0",
     "msw": "^0.46.1",
     "postcss": "^8.4.18",
     "prettier": "^2.7.1",

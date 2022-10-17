@@ -1,22 +1,20 @@
-# About
+## About
 
-# See it live
+This is a web-app that generates experiences similar to the social media trend of "information + Minecraft parkour video on the back".
 
-# Screenshots
+The goal is to have something in the background to keep you focused on the screen while listening to the information and accompanying it by the subtitles.
 
-# Reference Links
+## See it live
 
-- https://www.assemblyai.com/blog/react-text-to-speech-simplified/
-- https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/voice
-- https://www.npmjs.com/package/react-player#config-prop
-- https://developers.google.com/youtube/player_parameters?playerVersion=HTML5
-- https://react-hook-form.com/get-started/
-- https://www.radix-ui.com/docs/primitives/components/slider#slider
-- https://www.framer.com/docs/introduction/
+http://WixeI.github.io/focus-parkour
 
-# This project used:
+## Demonstration
 
-## In General
+![demonstration-gif](./demonstration.gif)
+
+## This project used:
+
+### In General
 
 - Folder organization in which content is in a descriptive folder with index file and optional files
   - Types are kept in types.ts
@@ -26,7 +24,7 @@
   - Local hooks are kept in /hooks local folder
   - Local translations are kept in /localization local folder
 
-## On Components
+### On Components
 
 - Props extending HTML tags and with component name as prefix
 - Ref forwarding
@@ -38,7 +36,7 @@
 - "S" namespace for Styled Components
 - Styles with propStyles variable
 
-## On Styles and Theming
+### On Styles and Theming
 
 - DefaultStyles variable & file
 - ResetStyles variable & file
@@ -46,14 +44,14 @@
 - Global Styles
 - MUI Custom Theming
 
-## On Context
+### On Context
 
 - Error handling
 - "value" variable with "get" and "set" objects to organize better
 - Memo to memoize "value" and help with unecessary re-renders
 - Categorized content sections as "Utility Information" and others by necessity
 
-## As libs
+### As libs
 
 - React Icons
 - Styled Components
@@ -66,7 +64,7 @@
 - i18n (i18next)
 - Craco (to override Create React App configuration and allow Styled Components with MUI)
 
-# Useful Specific Libs
+## Useful Specific Libs
 
 - Routes handling: npm i react-router-dom
 - Requests Handling: npm i axios
@@ -81,16 +79,16 @@
 - Complex Animations: npm i react-lottie (After Effects style)
 - Chart Creation: npm i react-chartjs-2 chart.js
 
-# Folder Structure inside Global and Pages:
+## Folder Structure inside Global and Pages:
 
-## Rules
+### Rules
 
 - Folders must have category names or descriptive names
 - Use index files for entry points of folders
 - When next to index file, other files must have category names, otherwise they can be descriptive names
 - Aggregator files gather contents to export as one
 
-## Categories:
+### Categories:
 
 - components: holds React components
 - constants: holds data that does not change
@@ -107,33 +105,12 @@
 
 Ps: Group in folders based on functionality first, and then on categories inside these functionalities
 
-# Component Structure
+## Reference Links
 
-## Components can be of:
-
-- Functionality: globals (No notation)
-- Piece/Part/Portion: locals ("P" notation)
-- Style: locals ("S" notation)
-
-PS: Page components are special no notation Part Components
-
-## Applying notation:
-
-### In styles.ts:
-
-- const S = {styles}
-
-### In index.ts:
-
-- const P = {parts}
-
-PS: Parts are in index because they come from different files. If styles were the same way, they would be an object in index too.
-
-## Rules:
-
-- Inline styling only to apply conditionals
-- Use common sense to break into Parts. Don't over-engineer it
-
-## FAQ
-
-- Why not inline styling? Because DRY is not good in it, and creating components defeats the purpose of inline style being faster to read and write
+- https://www.assemblyai.com/blog/react-text-to-speech-simplified/
+- https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/voice
+- https://www.npmjs.com/package/react-player#config-prop
+- https://developers.google.com/youtube/player_parameters?playerVersion=HTML5
+- https://react-hook-form.com/get-started/
+- https://www.radix-ui.com/docs/primitives/components/slider#slider
+- https://www.framer.com/docs/introduction/
