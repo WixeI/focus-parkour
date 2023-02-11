@@ -25,11 +25,12 @@ http://WixeI.github.io/focus-parkour
 
 ### On Styles and Theming
 
-- Tailwind css
+- Tailwind Css
 - Started using Stitches but changed across the project
 
 ### As libs
 
+- TypeScript
 - React Icons
 - Tailwind Css
 - Framer Motion
